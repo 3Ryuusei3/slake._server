@@ -57,7 +57,7 @@ router.post("/login", (req, res, next) => {
 			if (bcrypt.compareSync(password, foundUser.password)) {
 				const { _id, email, username } = foundUser
 				const payload = { _id, email, username }
-				const authToken = jwt.sign(payload, proccess.env.TOKEN_SECRET, { algorithm: "HS256", expiresIn: "12h" })
+				const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, { algorithm: "HS256", expiresIn: "12h" })
 				res.status(200).json({ authToken })
 			} else {
 				res.status(401).json({ message: "Unable to authenticate the user" })
@@ -70,6 +70,7 @@ router.post("/login", (req, res, next) => {
 })
 
 router.get("/verify", isAuthenticated, (req, res, next) => {
+	console.log("ESTAMOS EN LA RUTA Y TODO EN ORDEN", req.payload)
 	res.status(200).json(req.payload)
 })
 
