@@ -8,9 +8,15 @@ router.get("/list", (req, res) => {
 		.catch(err => console.log(err))
 })
 
+router.get("/shared", (req, res) => {
+	Note.find({ shared: true })
+		.then(response => res.json(response))
+		.catch(err => console.log(err))
+})
+
 router.get("/list/:id", (req, res) => {
 	const { id: user_id } = req.params
-	Note.findById(user_id)
+	Note.find({ owner: user_id })
 		.then(response => res.json(response))
 		.catch(err => console.log(err))
 })

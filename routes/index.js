@@ -2,6 +2,9 @@ module.exports = app => {
 	const authRoutes = require("./auth.routes")
 	app.use("/api/auth", authRoutes)
 
+	const userRoutes = require("./user.routes")
+	app.use("/api/user", userRoutes)
+
 	const dashboardRoutes = require("./dashboard.routes")
 	app.use("/api/dashboard", dashboardRoutes)
 
@@ -10,7 +13,4 @@ module.exports = app => {
 
 	const kanbanRoutes = require("./kanban.routes")
 	app.use("/api/kanban", kanbanRoutes)
-
-	const userRoutes = require("./user.routes")
-	app.use("/api/user", userRoutes)
 }

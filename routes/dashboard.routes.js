@@ -9,8 +9,8 @@ router.get("/list", (req, res) => {
 })
 
 router.get("/:id", (req, res) => {
-	const { id: dashboard_id } = req.params
-	Dashboard.findById(dashboard_id)
+	const { id: user_id } = req.params
+	Dashboard.find({ owner: user_id })
 		.then(response => res.json(response))
 		.catch(err => res.status(500).json(err))
 })
@@ -27,7 +27,7 @@ router.post("/update/:id", (req, res) => {
 router.post("/delete/:id", (req, res) => {
 	const { id: user_id } = req.params
 
-	Dashboard.findByIdAndDelete(user_id)
+	Dashboard.findOneAndDelete({ owner: user_id })
 		.then(response => res.json(response))
 		.catch(err => res.status(500).json(err))
 })

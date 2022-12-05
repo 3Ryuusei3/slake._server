@@ -9,7 +9,7 @@ router.get("/list", (req, res) => {
 
 router.get("/:id", (req, res) => {
 	const { id: user_id } = req.params
-	Kanban.findById(user_id)
+	Kanban.find({ owner: user_id })
 		.then(response => res.json(response))
 		.catch(err => res.status(500).json(err))
 })
@@ -26,7 +26,7 @@ router.post("/update/:id", (req, res) => {
 router.post("/delete/:id", (req, res) => {
 	const { id: user_id } = req.params
 
-	Kanban.findByIdAndDelete(user_id)
+	Kanban.findOneAndDelete({ owner: user_id })
 		.then(response => res.json(response))
 		.catch(err => res.status(500).json(err))
 })
