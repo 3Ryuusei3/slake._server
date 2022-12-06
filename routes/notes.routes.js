@@ -29,7 +29,7 @@ router.get("/:id", (req, res) => {
 		.catch(err => console.log(err))
 })
 
-router.post("/update/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
 	const { id: note_id } = req.params
 	const { block, header } = req.body
 
@@ -38,7 +38,7 @@ router.post("/update/:id", (req, res) => {
 		.catch(err => console.log(err))
 })
 
-router.post("/deletemany/:id", (req, res) => {
+router.delete("/deletemany/:id", (req, res) => {
 	const { id: user_id } = req.params
 
 	Note.deleteMany({ owner: user_id })
@@ -46,7 +46,7 @@ router.post("/deletemany/:id", (req, res) => {
 		.catch(err => console.log(err))
 })
 
-router.post("/delete/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
 	const { id: note_id } = req.params
 
 	Note.findByIdAndDelete(note_id)
@@ -55,7 +55,10 @@ router.post("/delete/:id", (req, res) => {
 })
 
 router.post("/new", (req, res) => {
-	Note.create(req.body)
+
+	const { header, tag, shared, owner } = req.body
+
+	Note.create({ header, tag, shared, owner })
 		.then(response => res.json(response))
 		.catch(err => console.log(err))
 })

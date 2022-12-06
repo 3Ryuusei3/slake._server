@@ -7,7 +7,7 @@ router.get("/list", (req, res) => {
 		.catch(err => res.status(500).json(err))
 })
 
-router.post("/update/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
 	const { id: user_id } = req.params
 	const { email, username, imageUrl, role } = req.body
 
@@ -16,7 +16,7 @@ router.post("/update/:id", (req, res) => {
 		.catch(err => res.status(500).json(err))
 })
 
-router.post("/delete/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
 	const { id: user_id } = req.params
 
 	User.findByIdAndDelete(user_id)

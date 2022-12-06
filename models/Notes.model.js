@@ -15,10 +15,10 @@ const noteSchema = new mongoose.Schema(
 				type: String,
 				default: "Note",
 			},
-			tag: {
-				type: String,
-				enum: ["Diary", "Work", "School", "Travel", "Social"],
-			},
+		},
+		tag: {
+			type: String,
+			enum: ["Diary", "Work", "School", "Travel", "Social"],
 		},
 		block: [
 			{

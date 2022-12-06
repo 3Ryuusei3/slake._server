@@ -15,7 +15,7 @@ router.get("/:id", (req, res) => {
 		.catch(err => res.status(500).json(err))
 })
 
-router.post("/update/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
 	const { id: dashboard_id } = req.params
 	const { todo, callout, header } = req.body
 
@@ -24,7 +24,7 @@ router.post("/update/:id", (req, res) => {
 		.catch(err => res.status(500).json(err))
 })
 
-router.post("/delete/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
 	const { id: user_id } = req.params
 
 	Dashboard.findOneAndDelete({ owner: user_id })
@@ -33,7 +33,8 @@ router.post("/delete/:id", (req, res) => {
 })
 
 router.post("/new", (req, res) => {
-	Dashboard.create(req.body)
+	const { header, callout, todo, owner } = req.body
+	Dashboard.create({ header, callout, todo, owner })
 		.then(response => res.json(response))
 		.catch(err => res.status(500).json(err))
 })
