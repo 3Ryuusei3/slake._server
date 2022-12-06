@@ -7,6 +7,14 @@ router.get("/list", (req, res) => {
 		.catch(err => res.status(500).json(err))
 })
 
+router.get("/result", (req, res) => {
+	const { email } = req.query
+
+	User.find({ email })
+		.then(response => res.json(response))
+		.catch(err => res.status(500).json(err))
+})
+
 router.put("/update/:id", (req, res) => {
 	const { id: user_id } = req.params
 	const { email, username, imageUrl, role } = req.body

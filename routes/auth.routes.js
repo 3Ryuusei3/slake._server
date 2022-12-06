@@ -2,13 +2,17 @@ const router = require("express").Router()
 
 const bcrypt = require("bcryptjs")
 const User = require("./../models/User.model")
+const Dashboard = require("./../models/Dashboard.model")
+const Kanban = require("./../models/Kanban.model")
+const Note = require("./../models/Notes.model")
+
 const saltRounds = 10
 
 const jwt = require("jsonwebtoken")
 
 const { isAuthenticated } = require("./../middleware/jwt.middleware")
 
-router.post("/signup", (req, res, next) => {
+/* router.post("/signup", (req, res, next) => {
 	const { email, password, username, imageUrl } = req.body
 
 	if (password.length < 5) {
@@ -38,6 +42,41 @@ router.post("/signup", (req, res, next) => {
 			console.log(err)
 			res.status(500).json({ message: "Internal Server Error" })
 		})
+}) */
+
+router.post("/signup", async (req, res, next) => {
+	try {
+		const { email, password, username, imageUrl } = req.body
+
+		if (password.length < 5) {
+			res.status(400).json({ message: "Password must have at least 6 characters" })
+			return
+		}
+
+		const foundUser = await User.findOne({ email })
+
+		if (foundUser) {
+			res.status(400).json({ message: "User already exists." })
+			return
+		}
+
+		const salt = bcrypt.genSaltSync(saltRounds)
+		const hashedPassword = bcrypt.hashSync(password, salt)
+
+		const createdUser = await User.create({ email, password: hashedPassword, username, imageUrl })
+
+		const { _id } = createdUser
+		const user = { email, username, _id, imageUrl }
+
+		const createDashboard = await Dashboard.create({ owner: createdUser._id })
+		const createKanban = await Kanban.create({ owner: createdUser._id })
+		const createNote = await Note.create({ owner: createdUser._id })
+
+		res.status(201).json({ user, createDashboard, createKanban, createNote })
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({ message: "Internal Server Error" })
+	}
 })
 
 router.post("/login", (req, res, next) => {
