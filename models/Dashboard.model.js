@@ -21,7 +21,13 @@ const dashboardSchema = new mongoose.Schema(
 		},
 		todo: [
 			{
-				type: String,
+				text: {
+					type: String,
+				},
+				isDone: {
+					type: Boolean,
+					default: false,
+				},
 			},
 		],
 		owner: {

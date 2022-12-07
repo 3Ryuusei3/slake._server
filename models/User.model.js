@@ -4,17 +4,17 @@ const userSchema = new mongoose.Schema(
 	{
 		email: {
 			type: String,
-			required: true,
+			required: [true, 'This field is required'],
 			unique: true,
-			lowercase: true,
+			lowercase: [true, 'Email must be in lowercase'],
 		},
 		password: {
 			type: String,
-			required: true,
+			required: [true, 'This field is required'],
 		},
 		username: {
 			type: String,
-			required: true,
+			required: [true, 'This field is required'],
 		},
 		imageUrl: {
 			type: String,

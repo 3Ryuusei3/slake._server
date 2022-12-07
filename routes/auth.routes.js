@@ -12,51 +12,19 @@ const jwt = require("jsonwebtoken")
 
 const { isAuthenticated } = require("./../middleware/jwt.middleware")
 
-/* router.post("/signup", (req, res, next) => {
-	const { email, password, username, imageUrl } = req.body
-
-	if (password.length < 5) {
-		res.status(400).json({ message: "Password must have at least 6 characters" })
-		return
-	}
-
-	User.findOne({ email })
-		.then(foundUser => {
-			if (foundUser) {
-				res.status(400).json({ message: "User already exists." })
-				return
-			}
-
-			const salt = bcrypt.genSaltSync(saltRounds)
-			const hashedPassword = bcrypt.hashSync(password, salt)
-
-			return User.create({ email, password: hashedPassword, username, imageUrl })
-		})
-		.then(createdUser => {
-			const { email, username, _id, imageUrl } = createdUser
-			const user = { email, username, _id, imageUrl }
-
-			res.status(201).json({ user })
-		})
-		.catch(err => {
-			console.log(err)
-			res.status(500).json({ message: "Internal Server Error" })
-		})
-}) */
-
 router.post("/signup", async (req, res, next) => {
 	try {
 		const { email, password, username, imageUrl } = req.body
 
 		if (password.length < 5) {
-			res.status(400).json({ message: "Password must have at least 6 characters" })
+			res.status(400).json({ message: "Password must have at least 6 characters." })
 			return
 		}
 
 		const foundUser = await User.findOne({ email })
 
 		if (foundUser) {
-			res.status(400).json({ message: "User already exists." })
+			res.status(409).json({ message: "This email is already in use." })
 			return
 		}
 
@@ -74,8 +42,7 @@ router.post("/signup", async (req, res, next) => {
 
 		res.status(201).json({ user, createDashboard, createKanban, createNote })
 	} catch (err) {
-		console.log(err)
-		res.status(500).json({ message: "Internal Server Error" })
+		next(err)
 	}
 })
 
@@ -83,7 +50,7 @@ router.post("/login", (req, res, next) => {
 	const { email, password } = req.body
 
 	if (email === "" || password === "") {
-		res.status(400).json({ message: "Provide email and password" })
+		res.status(400).json({ message: "Provide email and password." })
 		return
 	}
 
@@ -103,13 +70,12 @@ router.post("/login", (req, res, next) => {
 			}
 		})
 		.catch(err => {
-			console.log(err)
-			res.status(500).json({ message: "Internal Server Error" })
+			next(err)
 		})
 })
 
 router.get("/verify", isAuthenticated, (req, res, next) => {
-	console.log("ESTAMOS EN LA RUTA Y TODO EN ORDEN", req.payload)
+	//console.log("ESTAMOS EN LA RUTA Y TODO EN ORDEN", req.payload)
 	res.status(200).json(req.payload)
 })
 
