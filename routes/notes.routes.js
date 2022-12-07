@@ -2,6 +2,8 @@ const router = require("express").Router()
 
 const Note = require("./../models/Notes.model")
 
+const { isAuthenticated } = require('./../middleware/jwt.middleware')
+
 router.get("/list", (req, res, next) => {
 	Note.find()
 		.then(response => res.json(response))
@@ -14,9 +16,9 @@ router.get("/shared", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.get("/list/:id", (req, res, next) => {
-	const { id: user_id } = req.params
-	Note.find({ owner: user_id })
+router.get("/list/:id", isAuthenticated, (req, res, next) => {
+	//const { id: user_id } = req.params
+	Note.find({ owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
@@ -38,10 +40,10 @@ router.put("/update/:id", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.delete("/deletemany/:id", (req, res, next) => {
-	const { id: user_id } = req.params
+router.delete("/deletemany/:id", isAuthenticated, (req, res, next) => {
+	//const { id: user_id } = req.params
 
-	Note.deleteMany({ owner: user_id })
+	Note.deleteMany({ owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
@@ -54,11 +56,11 @@ router.delete("/delete/:id", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.post("/new", (req, res, next) => {
+router.post("/new", isAuthenticated, (req, res, next) => {
 
-	const { header, tag, shared, owner } = req.body
+	const { header, tag, shared } = req.body
 
-	Note.create({ header, tag, shared, owner })
+	Note.create({ header, tag, shared, owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })

@@ -1,5 +1,6 @@
 const router = require("express").Router()
 
+const { isAuthenticated } = require("../middleware/jwt.middleware")
 const Dashboard = require("./../models/Dashboard.model")
 
 router.get("/list", (req, res, next) => {
@@ -8,9 +9,9 @@ router.get("/list", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.get("/:id", (req, res, next) => {
-	const { id: user_id } = req.params
-	Dashboard.find({ owner: user_id })
+router.get("/:id", isAuthenticated, (req, res, next) => {
+	//const { id: user_id } = req.params
+	Dashboard.find({ owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
@@ -24,17 +25,19 @@ router.put("/update/:id", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.delete("/delete/:id", (req, res, next) => {
-	const { id: user_id } = req.params
+router.delete("/delete/:id", isAuthenticated, (req, res, next) => {
+	//const { id: user_id } = req.params
 
-	Dashboard.findOneAndDelete({ owner: user_id })
+	Dashboard.findOneAndDelete({ owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
 
-router.post("/new", (req, res, next) => {
-	const { header, callout, todo, owner } = req.body
-	Dashboard.create({ header, callout, todo, owner })
+router.post("/new", isAuthenticated, (req, res, next) => {
+
+	const { header, callout, todo } = req.body
+
+	Dashboard.create({ header, callout, todo, owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
