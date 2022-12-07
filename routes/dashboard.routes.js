@@ -9,9 +9,25 @@ router.get("/list", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.get("/:id", isAuthenticated, (req, res, next) => {
-	//const { id: user_id } = req.params
-	Dashboard.find({ owner: req.payload._id })
+router.get("/:id", (req, res, next) => {
+	const { id: user_id } = req.params
+	Dashboard.find({ owner: user_id })
+		.then(response => {
+			console.log(response)
+			res.json(response)
+		})
+		.catch(err => next(err))
+})
+
+router.put("/update/image/:id", (req, res, next) => {
+	const { id: dashboard_id } = req.params
+	const { image } = req.body
+
+	const header = {
+		image: image
+	}
+
+	Dashboard.findByIdAndUpdate(dashboard_id, { header }, { new: true })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
