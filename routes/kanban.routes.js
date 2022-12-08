@@ -2,15 +2,15 @@ const router = require("express").Router()
 const Kanban = require("./../models/Kanban.model")
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 
-router.get("/list", (req, res, next) => {
-	Kanban.find()
+router.get("/", isAuthenticated, (req, res, next) => {
+	//const { id: user_id } = req.params
+	Kanban.find({ owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
 
-router.get("/:id", isAuthenticated, (req, res, next) => {
-	//const { id: user_id } = req.params
-	Kanban.find({ owner: req.payload._id })
+router.get("/list", (req, res, next) => {
+	Kanban.find()
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })

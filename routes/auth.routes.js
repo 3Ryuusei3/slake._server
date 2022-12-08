@@ -17,7 +17,6 @@ router.post("/signup", async (req, res, next) => {
 		const { email, password, username, imageUrl } = req.body
 
 		if (password.length < 5) {
-
 			res.status(400).json({ message: "Password must have at least 6 characters" })
 			return
 		}
@@ -63,8 +62,8 @@ router.post("/login", (req, res, next) => {
 				return
 			}
 			if (bcrypt.compareSync(password, foundUser.password)) {
-				const { _id, email, username } = foundUser
-				const payload = { _id, email, username }
+				const { _id, email, username, imageUrl } = foundUser
+				const payload = { _id, email, username, imageUrl }
 				const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, { algorithm: "HS256", expiresIn: "12h" })
 				res.status(200).json({ authToken })
 			} else {

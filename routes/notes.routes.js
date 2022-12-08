@@ -2,7 +2,13 @@ const router = require("express").Router()
 
 const Note = require("./../models/Notes.model")
 
-const { isAuthenticated } = require('./../middleware/jwt.middleware')
+const { isAuthenticated } = require("./../middleware/jwt.middleware")
+
+router.get("/", isAuthenticated, (req, res, next) => {
+	Note.find({ owner: req.payload._id })
+		.then(response => res.json(response))
+		.catch(err => next(err))
+})
 
 router.get("/list", (req, res, next) => {
 	Note.find()
@@ -12,13 +18,6 @@ router.get("/list", (req, res, next) => {
 
 router.get("/shared", (req, res, next) => {
 	Note.find({ shared: true })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
-
-router.get("/list/:id", isAuthenticated, (req, res, next) => {
-	//const { id: user_id } = req.params
-	Note.find({ owner: req.payload._id })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
@@ -57,7 +56,6 @@ router.delete("/delete/:id", (req, res, next) => {
 })
 
 router.post("/new", isAuthenticated, (req, res, next) => {
-
 	const { header, tag, shared } = req.body
 
 	Note.create({ header, tag, shared, owner: req.payload._id })
