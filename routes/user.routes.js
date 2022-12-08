@@ -1,5 +1,7 @@
 const router = require("express").Router()
 const User = require("./../models/User.model")
+const { isAuthenticated } = require("../middleware/jwt.middleware")
+
 
 router.get("/list", (req, res, next) => {
 	User.find()
@@ -15,11 +17,11 @@ router.get("/result", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.put("/update/:id", (req, res, next) => {
-	const { id: user_id } = req.params
+router.put("/update", isAuthenticated, (req, res, next) => {
+	//const { id: user_id } = req.params
 	const { email, username, imageUrl, role } = req.body
 
-	User.findByIdAndUpdate(user_id, { email, username, imageUrl, role }, { new: true })
+	User.findByIdAndUpdate(req.payload._id, { email, username, imageUrl, role }, { new: true })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
