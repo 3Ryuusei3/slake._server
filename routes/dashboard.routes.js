@@ -3,21 +3,22 @@ const router = require("express").Router()
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 const Dashboard = require("./../models/Dashboard.model")
 
-router.get("/list", (req, res, next) => {
-	Dashboard.find()
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
-
-router.get("/:id", (req, res, next) => {
-	const { id: user_id } = req.params
-	Dashboard.find({ owner: user_id })
+router.get("/", isAuthenticated, (req, res, next) => {
+	Dashboard.find({ owner: req.payload._id })
 		.then(response => {
 			console.log(response)
 			res.json(response)
 		})
 		.catch(err => next(err))
 })
+
+router.get("/list", (req, res, next) => {
+	Dashboard.find()
+		.then(response => res.json(response))
+		.catch(err => next(err))
+})
+
+
 
 router.put("/update/image/:id", (req, res, next) => {
 	const { id: dashboard_id } = req.params
