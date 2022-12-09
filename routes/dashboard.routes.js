@@ -13,6 +13,21 @@ router.get("/", isAuthenticated, getDashboardByUserId)
 
 router.get("/list", getAllDashboard)
 
+router.put("/update/header/:id", (req, res, next) => {
+
+	const { id: dashboard_id } = req.params
+	const newData = req.body
+
+	Dashboard.findById(dashboard_id)
+		.then(data => {
+			return Dashboard.findByIdAndUpdate(dashboard_id,
+				{ 'header': { ...data.header, ...newData } }
+				, { new: true })
+		})
+		.then(response => res.json(response))
+		.catch(err => next(err))
+})
+
 router.put("/update/image/:id", (req, res, next) => {
 	const { id: dashboard_id } = req.params
 	const { image } = req.body
@@ -25,6 +40,21 @@ router.put("/update/image/:id", (req, res, next) => {
 		.then(response => res.json(response))
 		.catch(err => next(err))
 })
+
+
+/* router.put('/update/title/:id', (req, res, next) => {
+
+	const { id: dashboard_id } = req.params
+	const { title } = req.body
+
+	const header = {
+		title: title
+	}
+
+	Dashboard.findByIdAndUpdate(dashboard_id, { header }, { new: true })
+		.then(response => res.json(response))
+		.catch(err => next(err))
+}) */
 
 router.put("/update/:id", updateDashboard)
 
