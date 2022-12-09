@@ -3,20 +3,11 @@ const router = require("express").Router()
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 const Dashboard = require("./../models/Dashboard.model")
 
-router.get("/", isAuthenticated, (req, res, next) => {
-	Dashboard.find({ owner: req.payload._id })
-		.then(response => {
-			console.log(response)
-			res.json(response)
-		})
-		.catch(err => next(err))
-})
+const { deleteDashboard, getAllDashboard, getDashboardByUserId, newDashboard, updateDashboard } = require('../controllers/dashboard.controller')
 
-router.get("/list", (req, res, next) => {
-	Dashboard.find()
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.get("/", isAuthenticated, getDashboardByUserId)
+
+router.get("/list", getAllDashboard)
 
 
 
@@ -33,30 +24,10 @@ router.put("/update/image/:id", (req, res, next) => {
 		.catch(err => next(err))
 })
 
-router.put("/update/:id", (req, res, next) => {
-	const { id: dashboard_id } = req.params
-	const { todo, callout, header } = req.body
+router.put("/update/:id", updateDashboard)
 
-	Dashboard.findByIdAndUpdate(dashboard_id, { todo, callout, header }, { new: true })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.delete("/delete/:id", isAuthenticated, deleteDashboard)
 
-router.delete("/delete/:id", isAuthenticated, (req, res, next) => {
-	//const { id: user_id } = req.params
-
-	Dashboard.findOneAndDelete({ owner: req.payload._id })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
-
-router.post("/new", isAuthenticated, (req, res, next) => {
-
-	const { header, callout, todo } = req.body
-
-	Dashboard.create({ header, callout, todo, owner: req.payload._id })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.post("/new", isAuthenticated, newDashboard)
 
 module.exports = router
