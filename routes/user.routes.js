@@ -18,7 +18,6 @@ router.get("/result", (req, res, next) => {
 })
 
 router.put("/update", isAuthenticated, (req, res, next) => {
-	//const { id: user_id } = req.params
 	const { email, username, imageUrl, role } = req.body
 
 	User.findByIdAndUpdate(req.payload._id, { email, username, imageUrl, role }, { new: true })
