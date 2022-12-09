@@ -1,16 +1,27 @@
 const Kanban = require('../models/Kanban.model')
 
 const createKanban = (req, res, next) => {
+
     const { header, column } = req.body
-    Kanban.create({ header, column, owner: req.payload._id })
+    const { _id: owner } = req.payload
+
+    Kanban.create({ header, column, owner })
         .then(response => res.json(response))
 }
+
+
 const getKanbanByUserId = (req, res, next) => {
-    Kanban.find({ owner: req.payload._id })
+
+    const { _id: owner } = req.payload
+
+    Kanban.find({ owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
+
+
 const updateKanban = (req, res, next) => {
+
     const { id: kanban_id } = req.params
     const { header, column } = req.body
 
@@ -19,14 +30,19 @@ const updateKanban = (req, res, next) => {
         .catch(err => next(err))
 }
 
+
 const deleteKanban = (req, res, next) => {
 
-    Kanban.findOneAndDelete({ owner: req.payload._id })
+    const { _id: owner } = req.payload
+
+    Kanban.findOneAndDelete({ owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
 
+
 const getAllKanban = (req, res, next) => {
+
     Kanban.find()
         .then(response => res.json(response))
         .catch(err => next(err))

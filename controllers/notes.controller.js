@@ -2,27 +2,38 @@ const Note = require('./../models/Notes.model')
 
 
 const createNote = (req, res, next) => {
-    const { header, tag, shared } = req.body
 
-    Note.create({ header, tag, shared, owner: req.payload._id })
+    const { header, tag, shared } = req.body
+    const { _id: owner } = req.payload
+
+    Note.create({ header, tag, shared, owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
+
 
 const getNotesByUserId = (req, res, next) => {
-    Note.find({ owner: req.payload._id })
+
+    const { _id: owner } = req.payload
+
+    Note.find({ owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
 
+
 const getNote = (req, res, next) => {
+
     const { id: note_id } = req.params
+
     Note.findById(note_id)
         .then(response => res.json(response))
         .catch(err => next(err))
 }
 
+
 const updateNote = (req, res, next) => {
+
     const { id: note_id } = req.params
     const { block, header } = req.body
 
@@ -31,7 +42,9 @@ const updateNote = (req, res, next) => {
         .catch(err => next(err))
 }
 
+
 const deleteNote = (req, res, next) => {
+
     const { id: note_id } = req.params
 
     Note.findByIdAndDelete(note_id)
@@ -39,18 +52,24 @@ const deleteNote = (req, res, next) => {
         .catch(err => next(err))
 }
 
+
 const deleteAllNotes = (req, res, next) => {
 
-    Note.deleteMany({ owner: req.payload._id })
+    const { _id: owner } = req.payload
+
+    Note.deleteMany({ owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
 
+
 const shareNote = (req, res, next) => {
+
     Note.find({ shared: true })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
+
 
 module.exports = {
     createNote,

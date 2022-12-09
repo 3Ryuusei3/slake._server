@@ -35,19 +35,21 @@ const userSchema = new mongoose.Schema(
 )
 
 userSchema.pre('save', function (next) {
+
 	const saltRounds = 10
 	const salt = bcrypt.genSaltSync(saltRounds)
 	const hashedPassword = bcrypt.hashSync(this.password, salt)
 	this.password = hashedPassword
-
 	next()
 })
 
 userSchema.methods.validatePassword = function (candidatePassword) {
+
 	return bcrypt.compareSync(candidatePassword, this.password)
 }
 
 userSchema.methods.signToken = function () {
+
 	const { _id, username, email, imageUrl, role } = this
 	const payload = { _id, username, email, imageUrl, role }
 
@@ -56,10 +58,7 @@ userSchema.methods.signToken = function () {
 		process.env.TOKEN_SECRET,
 		{ algorithm: 'HS256', expiresIn: "12h" }
 	)
-
 	return authToken
 }
-
-
 
 module.exports = mongoose.model("User", userSchema)

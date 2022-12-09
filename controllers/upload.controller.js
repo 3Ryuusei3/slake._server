@@ -1,5 +1,5 @@
 
-const uploadImage = (req, res) => {
+const uploadSingleFile = (req, res) => {
 
     if (!req.file) {
         res.status(500).json({ errorMessage: 'Error with the upload of the file' })
@@ -7,4 +7,4 @@ const uploadImage = (req, res) => {
     res.json({ cloudinary_url: req.file.path })
 }
 
-module.exports = { uploadImage }
+module.exports = { uploadSingleFile }

@@ -1,5 +1,4 @@
 const router = require("express").Router()
-
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 const { updateUser, getAllUser } = require('./../controllers/user.controller')
 
