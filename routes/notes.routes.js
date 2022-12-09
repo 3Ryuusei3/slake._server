@@ -1,66 +1,21 @@
 const router = require("express").Router()
-
-const Note = require("./../models/Notes.model")
+const { createNote,
+    getNote, updateNote, getNotesByUserId, deleteNote, deleteAllNotes, shareNote } = require('./../controllers/notes.controller')
 
 const { isAuthenticated } = require("./../middleware/jwt.middleware")
 
-router.get("/", isAuthenticated, (req, res, next) => {
-	Note.find({ owner: req.payload._id })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.get("/", isAuthenticated, getNotesByUserId)
 
-router.get("/list", (req, res, next) => {
-	Note.find()
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.get("/shared", shareNote)
 
-router.get("/shared", (req, res, next) => {
-	Note.find({ shared: true })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.get("/:id", getNote)
 
-router.get("/:id", (req, res, next) => {
-	const { id: note_id } = req.params
+router.put("/update/:id", updateNote)
 
-	Note.findById(note_id)
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.delete("/deletemany/:id", isAuthenticated, deleteAllNotes)
 
-router.put("/update/:id", (req, res, next) => {
-	const { id: note_id } = req.params
-	const { block, header } = req.body
+router.delete("/delete/:id", deleteNote)
 
-	Note.findByIdAndUpdate(note_id, { block, header }, { new: true })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
-
-router.delete("/deletemany/:id", isAuthenticated, (req, res, next) => {
-	//const { id: user_id } = req.params
-
-	Note.deleteMany({ owner: req.payload._id })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
-
-router.delete("/delete/:id", (req, res, next) => {
-	const { id: note_id } = req.params
-
-	Note.findByIdAndDelete(note_id)
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
-
-router.post("/new", isAuthenticated, (req, res, next) => {
-	const { header, tag, shared } = req.body
-
-	Note.create({ header, tag, shared, owner: req.payload._id })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-})
+router.post("/new", isAuthenticated, createNote)
 
 module.exports = router
