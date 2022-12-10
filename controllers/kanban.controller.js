@@ -16,27 +16,30 @@ const getKanbanByUserId = (req, res, next) => {
 }
 
 const updateKanban = (req, res, next) => {
-	const { id: kanban_id } = req.params
-	const { header, column } = req.body
 
-	Kanban.findByIdAndUpdate(kanban_id, { header, column }, { new: true })
+	const { id: kanban_id } = req.params
+	const { lanes } = req.body
+
+	Kanban.findByIdAndUpdate(kanban_id, { ...lanes }, { new: true })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
 
 const updateKanbanHeader = (req, res, next) => {
-	const { id: kotes_id } = req.params
+
+	const { id: kanban_id } = req.params
 	const newData = req.body
 
-	Kanban.findById(kotes_id)
+	Kanban.findById(kanban_id)
 		.then(data => {
-			return Kanban.findByIdAndUpdate(kotes_id, { header: { ...data.header, ...newData } }, { new: true })
+			return Kanban.findByIdAndUpdate(kanban_id, { header: { ...data.header, ...newData } }, { new: true })
 		})
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
 
 const deleteKanban = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	Kanban.findOneAndDelete({ owner })

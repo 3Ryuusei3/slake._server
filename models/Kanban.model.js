@@ -16,23 +16,25 @@ const kanbanSchema = new mongoose.Schema(
 				default: "Kanban",
 			},
 		},
-		column: [
+		lanes: [
 			{
-				number: {
-					type: Number,
-				},
 				title: {
 					type: String,
-					enum: ["To do", "Doing", "Done", "Delete"],
+				},
+				id: {
+					type: String,
 				},
 				cards: [
 					{
-						text: {
+						title: {
 							type: String,
 						},
+						description: {
+							type: String,
+						}
 					},
 				],
-			},
+			}
 		],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -43,5 +45,23 @@ const kanbanSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 )
+
+kanbanSchema.pre("save", function (next) {
+	if (!this.lanes || this.lanes.length === 0) {
+		this.lanes.push({
+			"title": "To do",
+			"id": "TODO"
+		})
+		this.lanes.push({
+			"title": "Doing",
+			"id": "DOING"
+		})
+		this.lanes.push({
+			"title": "Done",
+			"id": "DONE"
+		})
+	}
+	next()
+})
 
 module.exports = mongoose.model("Kanban", kanbanSchema)
