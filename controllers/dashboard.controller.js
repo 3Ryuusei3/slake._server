@@ -1,60 +1,63 @@
-
 const Dashboard = require("./../models/Dashboard.model")
 
 const getDashboardByUserId = (req, res, next) => {
-
-    Dashboard.find({ owner: req.payload._id })
-        .then(response => {
-            console.log(response)
-            res.json(response)
-        })
-        .catch(err => next(err))
+	Dashboard.find({ owner: req.payload._id })
+		.then(response => {
+			console.log(response)
+			res.json(response)
+		})
+		.catch(err => next(err))
 }
-
 
 const getAllDashboard = (req, res, next) => {
-
-    Dashboard.find()
-        .then(response => res.json(response))
-        .catch(err => next(err))
+	Dashboard.find()
+		.then(response => res.json(response))
+		.catch(err => next(err))
 }
 
+const updateDashboardHeader = (req, res, next) => {
+	const { id: dashboard_id } = req.params
+	const newData = req.body
+
+	Dashboard.findById(dashboard_id)
+		.then(data => {
+			return Dashboard.findByIdAndUpdate(dashboard_id, { header: { ...data.header, ...newData } }, { new: true })
+		})
+		.then(response => res.json(response))
+		.catch(err => next(err))
+}
 
 const newDashboard = (req, res, next) => {
+	const { header, callout, todo } = req.body
+	const { _id: owner } = req.payload
 
-    const { header, callout, todo } = req.body
-    const { _id: owner } = req.payload
-
-    Dashboard.create({ header, callout, todo, owner })
-        .then(response => res.json(response))
-        .catch(err => next(err))
+	Dashboard.create({ header, callout, todo, owner })
+		.then(response => res.json(response))
+		.catch(err => next(err))
 }
-
 
 const deleteDashboard = (req, res, next) => {
+	const { _id: owner } = req.payload
 
-    const { _id: owner } = req.payload
-
-    Dashboard.findOneAndDelete({ owner })
-        .then(response => res.json(response))
-        .catch(err => next(err))
+	Dashboard.findOneAndDelete({ owner })
+		.then(response => res.json(response))
+		.catch(err => next(err))
 }
 
-
 const updateDashboard = (req, res, next) => {
+	const { id: dashboard_id } = req.params
+	const { todo, callout, header } = req.body
 
-    const { id: dashboard_id } = req.params
-    const { todo, callout, header } = req.body
-
-    Dashboard.findByIdAndUpdate(dashboard_id, { todo, callout, header }, { new: true })
-        .then(response => res.json(response))
-        .catch(err => next(err))
+	Dashboard.findByIdAndUpdate(dashboard_id, { todo, callout, header }, { new: true })
+		.then(response => res.json(response))
+		.catch(err => next(err))
 }
 
 module.exports = {
-    newDashboard,
-    deleteDashboard,
-    updateDashboard,
-    getAllDashboard,
-    getDashboardByUserId
+	newDashboard,
+	deleteDashboard,
+	updateDashboard,
+	getAllDashboard,
+	getDashboardByUserId,
+	updateDashboardHeader,
 }
