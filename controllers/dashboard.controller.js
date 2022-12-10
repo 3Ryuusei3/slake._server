@@ -1,7 +1,6 @@
 const Dashboard = require("./../models/Dashboard.model")
 
 const getDashboardByUserId = (req, res, next) => {
-
 	Dashboard.find({ owner: req.payload._id })
 		.then(response => {
 			res.json(response)
@@ -10,14 +9,12 @@ const getDashboardByUserId = (req, res, next) => {
 }
 
 const getAllDashboard = (req, res, next) => {
-
 	Dashboard.find()
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
 
 const updateDashboardHeader = (req, res, next) => {
-
 	const { id: dashboard_id } = req.params
 	const newData = req.body
 
@@ -30,7 +27,6 @@ const updateDashboardHeader = (req, res, next) => {
 }
 
 const updateCallOut = (req, res, next) => {
-
 	const { id: dashboard_id } = req.params
 	const { callout } = req.body
 
@@ -40,7 +36,6 @@ const updateCallOut = (req, res, next) => {
 }
 
 const updateTodo = (req, res, next) => {
-
 	const { id: dashboard_id } = req.params
 	const newData = req.body
 
@@ -48,15 +43,13 @@ const updateTodo = (req, res, next) => {
 
 	Dashboard.findById(dashboard_id)
 		.then(data => {
-			return Dashboard.findByIdAndUpdate(dashboard_id, { todo: [...data.todo, newData] }, { new: true })
+			return Dashboard.findByIdAndUpdate(dashboard_id, { todo: [...newData] }, { new: true })
 		})
 		.then(response => res.json(response))
 		.catch(err => next(err))
-
 }
 
 const newDashboard = (req, res, next) => {
-
 	const { header, callout, todo } = req.body
 	const { _id: owner } = req.payload
 
@@ -66,7 +59,6 @@ const newDashboard = (req, res, next) => {
 }
 
 const deleteDashboard = (req, res, next) => {
-
 	const { _id: owner } = req.payload
 
 	Dashboard.findOneAndDelete({ owner })
@@ -75,7 +67,6 @@ const deleteDashboard = (req, res, next) => {
 }
 
 const updateDashboard = (req, res, next) => {
-
 	const { id: dashboard_id } = req.params
 	const { todo, callout, header } = req.body
 
@@ -83,7 +74,6 @@ const updateDashboard = (req, res, next) => {
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
-
 
 module.exports = {
 	newDashboard,
@@ -93,5 +83,5 @@ module.exports = {
 	getDashboardByUserId,
 	updateDashboardHeader,
 	updateCallOut,
-	updateTodo
+	updateTodo,
 }
