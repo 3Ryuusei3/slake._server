@@ -18,6 +18,7 @@ const dashboardSchema = new mongoose.Schema(
 		},
 		callout: {
 			type: String,
+			default: "This is your callout"
 		},
 		todo: [
 			{

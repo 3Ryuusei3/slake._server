@@ -27,6 +27,16 @@ const updateDashboardHeader = (req, res, next) => {
 		.catch(err => next(err))
 }
 
+const updateCallOut = (req, res, next) => {
+
+	const { id: dashboard_id } = req.params
+	const { callout } = req.body
+
+	Dashboard.findByIdAndUpdate(dashboard_id, { callout })
+		.then(response => res.json(response))
+		.catch(err => next(err))
+}
+
 const newDashboard = (req, res, next) => {
 	const { header, callout, todo } = req.body
 	const { _id: owner } = req.payload
@@ -60,4 +70,5 @@ module.exports = {
 	getAllDashboard,
 	getDashboardByUserId,
 	updateDashboardHeader,
+	updateCallOut
 }
