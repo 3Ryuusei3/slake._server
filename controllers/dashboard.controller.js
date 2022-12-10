@@ -1,21 +1,23 @@
 const Dashboard = require("./../models/Dashboard.model")
 
 const getDashboardByUserId = (req, res, next) => {
+
 	Dashboard.find({ owner: req.payload._id })
 		.then(response => {
-			console.log(response)
 			res.json(response)
 		})
 		.catch(err => next(err))
 }
 
 const getAllDashboard = (req, res, next) => {
+
 	Dashboard.find()
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
 
 const updateDashboardHeader = (req, res, next) => {
+
 	const { id: dashboard_id } = req.params
 	const newData = req.body
 
@@ -37,7 +39,24 @@ const updateCallOut = (req, res, next) => {
 		.catch(err => next(err))
 }
 
+const updateTodo = (req, res, next) => {
+
+	const { id: dashboard_id } = req.params
+	const newData = req.body
+
+	console.log(newData)
+
+	Dashboard.findById(dashboard_id)
+		.then(data => {
+			return Dashboard.findByIdAndUpdate(dashboard_id, { todo: [...data.todo, newData] }, { new: true })
+		})
+		.then(response => res.json(response))
+		.catch(err => next(err))
+
+}
+
 const newDashboard = (req, res, next) => {
+
 	const { header, callout, todo } = req.body
 	const { _id: owner } = req.payload
 
@@ -47,6 +66,7 @@ const newDashboard = (req, res, next) => {
 }
 
 const deleteDashboard = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	Dashboard.findOneAndDelete({ owner })
@@ -55,6 +75,7 @@ const deleteDashboard = (req, res, next) => {
 }
 
 const updateDashboard = (req, res, next) => {
+
 	const { id: dashboard_id } = req.params
 	const { todo, callout, header } = req.body
 
@@ -63,6 +84,7 @@ const updateDashboard = (req, res, next) => {
 		.catch(err => next(err))
 }
 
+
 module.exports = {
 	newDashboard,
 	deleteDashboard,
@@ -70,5 +92,6 @@ module.exports = {
 	getAllDashboard,
 	getDashboardByUserId,
 	updateDashboardHeader,
-	updateCallOut
+	updateCallOut,
+	updateTodo
 }

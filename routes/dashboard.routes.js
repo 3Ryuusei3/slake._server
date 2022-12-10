@@ -9,7 +9,8 @@ const { deleteDashboard,
     updateCallOut,
     getDashboardByUserId,
     newDashboard,
-    updateDashboard } = require("../controllers/dashboard.controller")
+    updateDashboard,
+    updateTodo } = require("../controllers/dashboard.controller")
 
 router.get("/", isAuthenticated, getDashboardByUserId)
 
@@ -17,7 +18,9 @@ router.get("/list", getAllDashboard)
 
 router.put("/update/header/:id", isAuthenticated, updateDashboardHeader)
 
-router.put("/update/callout/:id", updateCallOut)
+router.put("/update/callout/:id", isAuthenticated, updateCallOut)
+
+router.put("/update/todo/:id", updateTodo)
 
 router.put("/update/:id", updateDashboard)
 
