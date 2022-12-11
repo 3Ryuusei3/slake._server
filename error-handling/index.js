@@ -6,7 +6,7 @@ module.exports = (app) => {
   app.use((err, req, res, next) => {
 
     if (err.code && err.code === 11000) {
-      res.status(409).json({ errorMessages: ['This data is already in the database'] })
+      res.status(409).json({ errorMessages: ['This email is already in the database'] })
     }
 
     if (err.name === 'ValidationError') {

@@ -43,9 +43,8 @@ const login = (req, res, next) => {
                 res.status(401).json({ message: "Unable to authenticate the user" })
             }
         })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({ message: "Internal Server Error" })
+        .catch(() => {
+            res.status(401).json({ message: "This email does not exist" })
         })
 }
 
