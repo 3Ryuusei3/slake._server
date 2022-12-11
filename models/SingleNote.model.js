@@ -9,7 +9,7 @@ const singleNoteSchema = new mongoose.Schema(
 			},
 			icon: {
 				type: String,
-				default: "📕",
+				default: "📘",
 			},
 			title: {
 				type: String,
@@ -19,6 +19,7 @@ const singleNoteSchema = new mongoose.Schema(
 		tag: {
 			type: String,
 			enum: ["Diary", "Work", "School", "Travel", "Social"],
+			default: "Diary",
 		},
 		block: [
 			{

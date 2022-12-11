@@ -14,6 +14,9 @@ module.exports = app => {
 	const notesRoutes = require("./notes.routes")
 	app.use("/api/notes", notesRoutes)
 
+	const singleNoteRoutes = require("./singleNote.routes")
+	app.use("/api/note", singleNoteRoutes)
+
 	const kanbanRoutes = require("./kanban.routes")
 	app.use("/api/kanban", kanbanRoutes)
 }
