@@ -5,7 +5,7 @@ const kanbanSchema = new mongoose.Schema(
 		header: {
 			image: {
 				type: String,
-				default: "https://res.cloudinary.com/dhws4e2ty/image/upload/v1670077714/kindpng_786207_kvzqol.png",
+				default: "https://res.cloudinary.com/dhws4e2ty/image/upload/v1670079643/glenn-carstens-peters-RLw-UC03Gwc-unsplash_mwr1c6.jpg",
 			},
 			icon: {
 				type: String,
@@ -31,10 +31,10 @@ const kanbanSchema = new mongoose.Schema(
 						},
 						description: {
 							type: String,
-						}
+						},
 					},
 				],
-			}
+			},
 		],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -49,16 +49,16 @@ const kanbanSchema = new mongoose.Schema(
 kanbanSchema.pre("save", function (next) {
 	if (!this.lanes || this.lanes.length === 0) {
 		this.lanes.push({
-			"title": "To do",
-			"id": "TODO"
+			title: "To do",
+			id: "TODO",
 		})
 		this.lanes.push({
-			"title": "Doing",
-			"id": "DOING"
+			title: "Doing",
+			id: "DOING",
 		})
 		this.lanes.push({
-			"title": "Done",
-			"id": "DONE"
+			title: "Done",
+			id: "DONE",
 		})
 	}
 	next()
