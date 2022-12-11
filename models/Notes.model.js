@@ -13,33 +13,17 @@ const noteSchema = new mongoose.Schema(
 			},
 			title: {
 				type: String,
-				default: "Note",
+				default: "All your notes",
 			},
 		},
-		tag: {
-			type: String,
-			enum: ["Diary", "Work", "School", "Travel", "Social"],
-		},
-		block: [
+		notes: [
 			{
-				htmlTag: {
-					type: String,
-					required: true,
-				},
-				content: {
-					type: String,
-					required: false,
-				},
-				imageUrl: {
-					type: String,
-					required: false,
+				singleNote: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "SingleNote",
 				},
 			},
 		],
-		shared: {
-			type: Boolean,
-			default: false,
-		},
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
