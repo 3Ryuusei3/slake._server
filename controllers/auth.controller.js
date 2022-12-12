@@ -36,16 +36,14 @@ const login = (req, res, next) => {
 
     User.findOne({ email })
         .then(foundUser => {
-            if (!foundUser || foundUser.validatePassword(password)) {
+            if (foundUser && foundUser.validatePassword(password)) {
                 res.status(200).json({ authToken: foundUser.signToken() })
             }
             else {
                 res.status(401).json({ message: "Unable to authenticate the user" })
             }
         })
-        .catch(() => {
-            res.status(401).json({ message: "This email does not exist" })
-        })
+        .catch(err => next(err))
 }
 
 
