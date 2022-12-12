@@ -11,11 +11,11 @@ module.exports = app => {
 	const dashboardRoutes = require("./dashboard.routes")
 	app.use("/api/dashboard", dashboardRoutes)
 
-	const notesRoutes = require("./notes.routes")
-	app.use("/api/notes", notesRoutes)
-
 	const singleNoteRoutes = require("./singleNote.routes")
 	app.use("/api/note", singleNoteRoutes)
+
+	const notesRoutes = require("./notes.routes")
+	app.use("/api/notes", notesRoutes)
 
 	const kanbanRoutes = require("./kanban.routes")
 	app.use("/api/kanban", kanbanRoutes)

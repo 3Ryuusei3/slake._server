@@ -1,10 +1,18 @@
 const SingleNote = require("../models/SingleNote.model")
 
 const createNote = (req, res, next) => {
-	const { header, tag, shared } = req.body
+	const { header } = req.body
 	const { _id: owner } = req.payload
 
-	SingleNote.create({ header, tag, shared, owner })
+	SingleNote.create({ header })
+		.then(response => res.json(response))
+		.catch(err => next(err))
+}
+
+const getNoteListByUser = (req, res, next) => {
+	const { id: owner } = req.params
+
+	SingleNote.find({ owner: owner })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
@@ -27,6 +35,7 @@ const deleteNote = (req, res, next) => {
 
 module.exports = {
 	createNote,
+	getNoteListByUser,
 	getNote,
 	deleteNote,
 }

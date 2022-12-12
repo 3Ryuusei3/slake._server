@@ -51,4 +51,14 @@ const singleNoteSchema = new mongoose.Schema(
 	}
 )
 
+singleNoteSchema.pre("save", function (next) {
+	if (!this.block || this.block.length === 0) {
+		this.block.push({
+			htmlTag: "h1",
+			content: "Note header",
+		})
+	}
+	next()
+})
+
 module.exports = mongoose.model("SingleNote", singleNoteSchema)

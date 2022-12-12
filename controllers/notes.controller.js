@@ -1,10 +1,10 @@
 const Notes = require("./../models/Notes.model")
 
 const createNotes = (req, res, next) => {
-	const { header, tag, shared } = req.body
+	const { header } = req.body
 	const { _id: owner } = req.payload
 
-	Notes.create({ header, tag, shared, owner })
+	Notes.create({ header, owner })
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
