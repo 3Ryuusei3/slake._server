@@ -13,7 +13,7 @@ const singleNoteSchema = new mongoose.Schema(
 			},
 			title: {
 				type: String,
-				default: "New note",
+				default: "New Note",
 			},
 		},
 		tag: {
