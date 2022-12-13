@@ -31,6 +31,16 @@ const singleNoteSchema = new mongoose.Schema(
 					type: String,
 					required: false,
 				},
+				style: {
+					type: String,
+					required: false,
+					default: "none",
+				},
+				type: {
+					type: String,
+					required: false,
+					default: "none",
+				},
 				imageUrl: {
 					type: String,
 					required: false,
