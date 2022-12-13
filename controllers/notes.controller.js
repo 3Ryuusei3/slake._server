@@ -17,15 +17,6 @@ const getNotesByUserId = (req, res, next) => {
 		.catch(err => next(err))
 }
 
-/* const updateNote = (req, res, next) => {
-	const { id: note_id } = req.params
-	const { block, header } = req.body
-
-	Notes.findByIdAndUpdate(note_id, { block, header }, { new: true })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-} */
-
 const updateNotesHeader = (req, res, next) => {
 	const { id: notes_id } = req.params
 	const newData = req.body
@@ -54,7 +45,6 @@ const shareNote = (req, res, next) => {
 
 module.exports = {
 	createNotes,
-	/* 	updateNote, */
 	updateNotesHeader,
 	getNotesByUserId,
 	deleteAllNotes,

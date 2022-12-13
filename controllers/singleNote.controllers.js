@@ -36,6 +36,18 @@ const updateSingleNoteHeader = (req, res, next) => {
 		.catch(err => next(err))
 }
 
+const updateBlocks = (req, res, next) => {
+	const { id: note_id } = req.params
+	const newData = req.body
+
+	SingleNote.findById(note_id)
+		.then(() => {
+			return SingleNote.findByIdAndUpdate(note_id, { block: [...newData] }, { new: true })
+		})
+		.then(response => res.json(response))
+		.catch(err => next(err))
+}
+
 const deleteNote = (req, res, next) => {
 	const { id: note_id } = req.params
 
@@ -45,6 +57,7 @@ const deleteNote = (req, res, next) => {
 }
 
 module.exports = {
+	updateBlocks,
 	createNote,
 	getNoteListByUser,
 	updateSingleNoteHeader,
