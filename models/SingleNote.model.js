@@ -18,7 +18,7 @@ const singleNoteSchema = new mongoose.Schema(
 		},
 		tag: {
 			type: String,
-			enum: ["Diary", "Work", "School", "Travel", "Social"],
+			enum: ["Diary", "Work", "School", "Travel", "Social", "Other"],
 			default: "Diary",
 		},
 		block: [
