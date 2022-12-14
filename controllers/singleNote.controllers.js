@@ -16,6 +16,13 @@ const getNoteListByUser = (req, res, next) => {
 		.catch(err => next(err))
 }
 
+const sharedNotes = (req, res, next) => {
+	SingleNote.find({ shared: true })
+		.populate("owner")
+		.then(response => res.json(response))
+		.catch(err => next(err))
+}
+
 const getNote = (req, res, next) => {
 	const { id: note_id } = req.params
 
@@ -69,6 +76,7 @@ const deleteNote = (req, res, next) => {
 }
 
 module.exports = {
+	sharedNotes,
 	updateBlocks,
 	createNote,
 	getNoteListByUser,

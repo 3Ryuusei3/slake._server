@@ -1,12 +1,10 @@
 const router = require("express").Router()
 
-const { updateNotesHeader, getNotesByUserId, deleteAllNotes, shareNote, createNotes } = require("./../controllers/notes.controller")
+const { updateNotesHeader, getNotesByUserId, deleteAllNotes, createNotes } = require("./../controllers/notes.controller")
 
 const { isAuthenticated } = require("./../middleware/jwt.middleware")
 
 router.get("/", isAuthenticated, getNotesByUserId)
-
-router.get("/shared", shareNote)
 
 router.put("/update/header/:id", updateNotesHeader)
 

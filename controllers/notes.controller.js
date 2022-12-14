@@ -37,16 +37,9 @@ const deleteAllNotes = (req, res, next) => {
 		.catch(err => next(err))
 }
 
-const shareNote = (req, res, next) => {
-	Notes.find({ shared: true })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-}
-
 module.exports = {
 	createNotes,
 	updateNotesHeader,
 	getNotesByUserId,
 	deleteAllNotes,
-	shareNote,
 }
