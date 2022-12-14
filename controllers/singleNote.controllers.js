@@ -19,6 +19,7 @@ const getNoteListByUser = (req, res, next) => {
 }
 
 const sharedNotes = (req, res, next) => {
+
 	SingleNote.find({ shared: true })
 		.populate("owner")
 		.then(response => res.json(response))
@@ -33,6 +34,8 @@ const getNote = (req, res, next) => {
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
+
+//HACE FALTA HACER UN RETORNO DE PROMESAS ??????
 
 const updateSingleNoteHeader = (req, res, next) => {
 
@@ -72,6 +75,9 @@ const updateBlocks = (req, res, next) => {
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
+
+//HACE FALTA HACER UN RETORNO DE PROMESAS ??????
+
 
 const deleteNote = (req, res, next) => {
 

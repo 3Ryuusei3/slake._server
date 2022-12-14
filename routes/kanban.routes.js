@@ -1,7 +1,5 @@
 const router = require("express").Router()
 
-
-
 const { getKanbanByUserId,
     getAllKanban,
     updateKanban,
@@ -11,7 +9,7 @@ const { getKanbanByUserId,
 
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 
-router.post("/new", isAuthenticated, createKanban)
+router.post("/new", createKanban)
 
 router.get("/", isAuthenticated, getKanbanByUserId)
 

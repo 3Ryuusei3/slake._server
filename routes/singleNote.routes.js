@@ -18,6 +18,6 @@ router.delete("/delete/:id", isAuthenticated, deleteNote)
 
 router.put("/update/header/:id", isAuthenticated, updateSingleNoteHeader)
 
-router.post("/new", isAuthenticated, createNote)
+router.post("/new", createNote)
 
 module.exports = router

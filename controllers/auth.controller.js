@@ -2,6 +2,7 @@ const User = require("./../models/User.model")
 const Dashboard = require("./../models/Dashboard.model")
 const Kanban = require("./../models/Kanban.model")
 const Note = require("./../models/Notes.model")
+const SingleNoteModel = require("../models/SingleNote.model")
 
 
 
@@ -17,9 +18,11 @@ const signup = async (req, res, next) => {
 
         const createDashboard = await Dashboard.create({ owner: createdUser._id })
         const createKanban = await Kanban.create({ owner: createdUser._id })
-        const createNote = await Note.create({ owner: createdUser._id })
+        const createNoteList = await Note.create({ owner: createdUser._id })
+        const createNote = await SingleNoteModel.create({ owner: createdUser._id })
 
-        res.status(201).json({ user, createDashboard, createKanban, createNote })
+        res.status(201).json({ user, createDashboard, createKanban, createNoteList, createNote })
+
     } catch (err) {
         next(err)
     }
@@ -47,7 +50,7 @@ const login = (req, res, next) => {
 }
 
 
-const verify = (req, res, next) => {
+const verify = (req, res) => {
     res.status(200).json(req.payload)
 }
 
@@ -58,13 +61,32 @@ const refreshToken = (req, res, next) => {
         .then((newToken) => {
             res.status(200).json({ refreshedToken: newToken.signToken() })
         })
-        .catch(err => console.log(['Failed to sign new token', err]))
+        .catch(err => next(err))
+}
+
+const deleteUser = async (req, res, next) => {
+
+    try {
+
+        const deleteUser = await User.findByIdAndRemove(req.payload._id)
+
+        const deleteDashboard = await Dashboard.deleteOne({ owner: req.payload._id })
+        const deleteKanban = await Kanban.deleteOne({ owner: req.payload._id })
+        const deleteNote = await Note.deleteOne({ owner: req.payload._id })
+
+        res.status(201)
+
+    }
+    catch (err) {
+        next(err)
+    }
+
 }
 
 module.exports = {
     signup,
     login,
     verify,
-    refreshToken
-
+    refreshToken,
+    deleteUser
 }

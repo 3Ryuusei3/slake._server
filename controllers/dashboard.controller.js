@@ -9,12 +9,12 @@ const getDashboardByUserId = (req, res, next) => {
 		.catch(err => next(err))
 }
 
-const getAllDashboard = (req, res, next) => {
+// const getAllDashboard = (req, res, next) => {
 
-	Dashboard.find()
-		.then(response => res.json(response))
-		.catch(err => next(err))
-}
+// 	Dashboard.find()
+// 		.then(response => res.json(response))
+// 		.catch(err => next(err))
+// }
 
 const updateDashboardHeader = (req, res, next) => {
 
@@ -83,9 +83,9 @@ module.exports = {
 	newDashboard,
 	deleteDashboard,
 	updateDashboard,
-	getAllDashboard,
 	getDashboardByUserId,
 	updateDashboardHeader,
 	updateCallOut,
 	updateTodo,
+	//getAllDashboard,
 }

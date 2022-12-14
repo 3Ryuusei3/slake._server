@@ -4,7 +4,7 @@ const { isAuthenticated } = require("../middleware/jwt.middleware")
 
 
 const { deleteDashboard,
-    getAllDashboard,
+    // getAllDashboard,
     updateDashboardHeader,
     updateCallOut,
     getDashboardByUserId,
@@ -14,7 +14,7 @@ const { deleteDashboard,
 
 router.get("/", isAuthenticated, getDashboardByUserId)
 
-router.get("/list", getAllDashboard)
+//router.get("/list", getAllDashboard)
 
 router.put("/update/header/:id", isAuthenticated, updateDashboardHeader)
 
@@ -26,6 +26,6 @@ router.put("/update/:id", isAuthenticated, updateDashboard)
 
 router.delete("/delete/:id", isAuthenticated, deleteDashboard)
 
-router.post("/new", isAuthenticated, newDashboard)
+router.post("/new", newDashboard)
 
 module.exports = router
