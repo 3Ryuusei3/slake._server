@@ -1,6 +1,7 @@
 const SingleNote = require("../models/SingleNote.model")
 
 const createNote = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	SingleNote.create({ owner })
@@ -9,6 +10,7 @@ const createNote = (req, res, next) => {
 }
 
 const getNoteListByUser = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	SingleNote.find({ owner })
@@ -17,6 +19,7 @@ const getNoteListByUser = (req, res, next) => {
 }
 
 const getNote = (req, res, next) => {
+
 	const { id: note_id } = req.params
 
 	SingleNote.findById(note_id)
@@ -25,6 +28,7 @@ const getNote = (req, res, next) => {
 }
 
 const updateSingleNoteHeader = (req, res, next) => {
+
 	const { id: note_id } = req.params
 	const newData = req.body
 
@@ -37,6 +41,7 @@ const updateSingleNoteHeader = (req, res, next) => {
 }
 
 const updateMetadata = (req, res, next) => {
+
 	const { id: note_id } = req.params
 	const newData = req.body
 
@@ -49,6 +54,7 @@ const updateMetadata = (req, res, next) => {
 }
 
 const updateBlocks = (req, res, next) => {
+
 	const { id: note_id } = req.params
 	const newData = req.body
 
@@ -61,6 +67,7 @@ const updateBlocks = (req, res, next) => {
 }
 
 const deleteNote = (req, res, next) => {
+
 	const { id: note_id } = req.params
 
 	SingleNote.findByIdAndDelete(note_id)

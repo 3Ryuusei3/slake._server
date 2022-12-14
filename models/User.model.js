@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
 			enum: ["USER", "USERPRO", "ADMIN"],
 			default: "USER",
 		},
+		isDark: {
+			type: Boolean,
+			default: false,
+		}
 	},
 	{
 		timestamps: true,
@@ -50,8 +54,8 @@ userSchema.methods.validatePassword = function (candidatePassword) {
 
 userSchema.methods.signToken = function () {
 
-	const { _id, username, email, imageUrl, role } = this
-	const payload = { _id, username, email, imageUrl, role }
+	const { _id, username, email, imageUrl, role, isDark } = this
+	const payload = { _id, username, email, imageUrl, role, isDark }
 
 	const authToken = jwt.sign(
 		payload,

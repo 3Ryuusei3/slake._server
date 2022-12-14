@@ -1,7 +1,7 @@
 const router = require("express").Router()
 
 const { isAuthenticated } = require("../middleware/jwt.middleware")
-const Dashboard = require("./../models/Dashboard.model")
+
 
 const { deleteDashboard,
     getAllDashboard,
@@ -20,9 +20,9 @@ router.put("/update/header/:id", isAuthenticated, updateDashboardHeader)
 
 router.put("/update/callout/:id", isAuthenticated, updateCallOut)
 
-router.put("/update/todo/:id", updateTodo)
+router.put("/update/todo/:id", isAuthenticated, updateTodo)
 
-router.put("/update/:id", updateDashboard)
+router.put("/update/:id", isAuthenticated, updateDashboard)
 
 router.delete("/delete/:id", isAuthenticated, deleteDashboard)
 

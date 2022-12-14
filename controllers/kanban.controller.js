@@ -1,13 +1,17 @@
 const Kanban = require("../models/Kanban.model")
 
 const createKanban = (req, res, next) => {
+
 	const { header, column } = req.body
 	const { _id: owner } = req.payload
 
-	Kanban.create({ header, column, owner }).then(response => res.json(response))
+	Kanban.create({ header, column, owner })
+		.then(response => res.json(response))
+		.catch(err => next(err))
 }
 
 const getKanbanByUserId = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	Kanban.find({ owner })
@@ -48,6 +52,7 @@ const deleteKanban = (req, res, next) => {
 }
 
 const getAllKanban = (req, res, next) => {
+
 	Kanban.find()
 		.then(response => res.json(response))
 		.catch(err => next(err))

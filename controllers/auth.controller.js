@@ -13,7 +13,7 @@ const signup = async (req, res, next) => {
         const createdUser = await User.create({ email, password, username, imageUrl })
 
         const { _id } = createdUser
-        const user = { email, username, _id, imageUrl }
+        const user = { email, username, _id, imageUrl, isDark }
 
         const createDashboard = await Dashboard.create({ owner: createdUser._id })
         const createKanban = await Kanban.create({ owner: createdUser._id })

@@ -1,6 +1,7 @@
 const Notes = require("./../models/Notes.model")
 
 const createNotes = (req, res, next) => {
+
 	const { header } = req.body
 	const { _id: owner } = req.payload
 
@@ -10,6 +11,7 @@ const createNotes = (req, res, next) => {
 }
 
 const getNotesByUserId = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	Notes.find({ owner })
@@ -18,6 +20,7 @@ const getNotesByUserId = (req, res, next) => {
 }
 
 const updateNotesHeader = (req, res, next) => {
+
 	const { id: notes_id } = req.params
 	const newData = req.body
 
@@ -30,6 +33,7 @@ const updateNotesHeader = (req, res, next) => {
 }
 
 const deleteAllNotes = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	Notes.deleteMany({ owner })
@@ -38,6 +42,7 @@ const deleteAllNotes = (req, res, next) => {
 }
 
 const shareNote = (req, res, next) => {
+
 	Notes.find({ shared: true })
 		.then(response => res.json(response))
 		.catch(err => next(err))

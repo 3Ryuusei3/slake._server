@@ -2,9 +2,9 @@ const User = require('./../models/User.model')
 
 const updateUser = (req, res, next) => {
 
-    const { email, username, imageUrl, role } = req.body
+    const { email, username, imageUrl, role, isDark } = req.body
 
-    User.findByIdAndUpdate(req.payload._id, { email, username, imageUrl, role }, { new: true })
+    User.findByIdAndUpdate(req.payload._id, { email, username, imageUrl, role, isDark }, { new: true })
         .then(response => res.json(response))
         .catch(err => next(err))
 }

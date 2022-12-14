@@ -61,6 +61,7 @@ const newDashboard = (req, res, next) => {
 }
 
 const deleteDashboard = (req, res, next) => {
+
 	const { _id: owner } = req.payload
 
 	Dashboard.findOneAndDelete({ owner })
@@ -69,6 +70,7 @@ const deleteDashboard = (req, res, next) => {
 }
 
 const updateDashboard = (req, res, next) => {
+
 	const { id: dashboard_id } = req.params
 	const { todo, callout, header } = req.body
 

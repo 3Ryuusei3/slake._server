@@ -6,9 +6,9 @@ const { isAuthenticated } = require("./../middleware/jwt.middleware")
 
 router.get("/", isAuthenticated, getNotesByUserId)
 
-router.get("/shared", shareNote)
+router.get("/shared", isAuthenticated, shareNote)
 
-router.put("/update/header/:id", updateNotesHeader)
+router.put("/update/header/:id", isAuthenticated, updateNotesHeader)
 
 router.delete("/deletemany/:id", isAuthenticated, deleteAllNotes)
 
