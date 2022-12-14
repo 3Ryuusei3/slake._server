@@ -4,6 +4,7 @@ const Kanban = require("./../models/Kanban.model")
 const Note = require("./../models/Notes.model")
 
 
+
 const signup = async (req, res, next) => {
 
     try {
@@ -50,8 +51,20 @@ const verify = (req, res, next) => {
     res.status(200).json(req.payload)
 }
 
+
+const refreshToken = (req, res, next) => {
+
+    User.findById(req.payload._id)
+        .then((newToken) => {
+            res.status(200).json({ refreshedToken: newToken.signToken() })
+        })
+        .catch(err => console.log(['Failed to sign new token', err]))
+}
+
 module.exports = {
     signup,
     login,
-    verify
+    verify,
+    refreshToken
+
 }
