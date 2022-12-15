@@ -19,7 +19,4 @@ module.exports = app => {
 
 	const kanbanRoutes = require("./kanban.routes")
 	app.use("/api/kanban", kanbanRoutes)
-
-	// const stripeRoutes = require("./stripe.routes")
-	// app.use("/api/payment", stripeRoutes)
 }
