@@ -11,8 +11,6 @@ router.get("/", isAuthenticated, getNotesByUserId)
 
 router.put("/update/header/:id", isAuthenticated, updateNotesHeader)
 
-router.delete("/deletemany/:id", isAuthenticated, deleteAllNotes)
-
 router.post("/new", createNotes)
 
 module.exports = router

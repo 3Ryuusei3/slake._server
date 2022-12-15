@@ -63,7 +63,7 @@ const deleteUser = async (req, res, next) => {
 		const deleteNote = await Note.deleteOne({ owner: req.payload._id })
 		// CAMBIAR: Añadir singleNote y delete many
 
-		res.status(201)
+		res.status(200)
 	} catch (err) {
 		next(err)
 	}

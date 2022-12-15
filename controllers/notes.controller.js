@@ -32,18 +32,10 @@ const updateNotesHeader = (req, res, next) => {
 		.catch(err => next(err))
 }
 
-const deleteAllNotes = (req, res, next) => {
 
-	const { _id: owner } = req.payload
-
-	Notes.deleteMany({ owner })
-		.then(response => res.json(response))
-		.catch(err => next(err))
-}
 
 module.exports = {
 	createNotes,
 	updateNotesHeader,
 	getNotesByUserId,
-	deleteAllNotes,
 }
