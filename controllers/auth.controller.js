@@ -61,6 +61,7 @@ const deleteUser = async (req, res, next) => {
 		const deleteDashboard = await Dashboard.deleteOne({ owner: req.payload._id })
 		const deleteKanban = await Kanban.deleteOne({ owner: req.payload._id })
 		const deleteNote = await Note.deleteOne({ owner: req.payload._id })
+		// CAMBIAR: Añadir singleNote y delete many
 
 		res.status(200)
 	} catch (err) {
