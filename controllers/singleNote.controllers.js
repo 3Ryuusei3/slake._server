@@ -35,8 +35,6 @@ const getNote = (req, res, next) => {
 		.catch(err => next(err))
 }
 
-//HACE FALTA HACER UN RETORNO DE PROMESAS ??????
-
 const updateSingleNoteHeader = (req, res, next) => {
 
 	const { id: note_id } = req.params
@@ -75,9 +73,6 @@ const updateBlocks = (req, res, next) => {
 		.then(response => res.json(response))
 		.catch(err => next(err))
 }
-
-//HACE FALTA HACER UN RETORNO DE PROMESAS ??????
-
 
 const deleteNote = (req, res, next) => {
 
