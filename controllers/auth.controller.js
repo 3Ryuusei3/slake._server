@@ -56,14 +56,16 @@ const refreshToken = (req, res, next) => {
 }
 
 const deleteUser = async (req, res, next) => {
+
 	try {
 		const deleteUser = await User.findByIdAndRemove(req.payload._id)
 		const deleteDashboard = await Dashboard.deleteOne({ owner: req.payload._id })
 		const deleteKanban = await Kanban.deleteOne({ owner: req.payload._id })
 		const deleteNote = await Note.deleteOne({ owner: req.payload._id })
-		// CAMBIAR: Añadir singleNote y delete many
+		const deleteAllNote = await SingleNoteModel.deleteMany({ owner: req.payload._id })
 
-		res.status(200)
+		res.sendStatus(204)
+
 	} catch (err) {
 		next(err)
 	}
