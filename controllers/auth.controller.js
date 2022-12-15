@@ -62,7 +62,7 @@ const deleteUser = async (req, res, next) => {
 		const deleteKanban = await Kanban.deleteOne({ owner: req.payload._id })
 		const deleteNote = await Note.deleteOne({ owner: req.payload._id })
 
-		res.status(201)
+		res.status(200)
 	} catch (err) {
 		next(err)
 	}

@@ -1,6 +1,6 @@
 const router = require("express").Router()
 
-const { sharedNotes, createNote, updateBlocks, deleteNote, getNote, updateSingleNoteHeader, getNoteListByUser, updateMetadata } = require("../controllers/singleNote.controllers")
+const { sharedNotes, createNote, updateBlocks, deleteNote, getNote, updateSingleNoteHeader, getNoteListByUser, updateMetadata, deleteAllNotes } = require("../controllers/singleNote.controllers")
 
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 
@@ -17,6 +17,8 @@ router.get("/list/:id", isAuthenticated, getNoteListByUser)
 router.delete("/delete/:id", isAuthenticated, deleteNote)
 
 router.put("/update/header/:id", isAuthenticated, updateSingleNoteHeader)
+
+router.delete("/deletemany/:id", isAuthenticated, deleteAllNotes)
 
 router.post("/new", isAuthenticated, createNote)
 
