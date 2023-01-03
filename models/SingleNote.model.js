@@ -34,7 +34,7 @@ const singleNoteSchema = new mongoose.Schema(
 				style: {
 					type: String,
 					required: false,
-					default: "none",
+					default: "Theme",
 				},
 				type: {
 					type: String,
