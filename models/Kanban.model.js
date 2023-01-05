@@ -26,6 +26,9 @@ const kanbanSchema = new mongoose.Schema(
 				},
 				cards: [
 					{
+						id: {
+							type: String,
+						},
 						title: {
 							type: String,
 						},
