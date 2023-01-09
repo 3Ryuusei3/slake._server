@@ -20,6 +20,19 @@ const newCalendar = (req, res, next) => {
 
 }
 
+const updateCalendarHeader = (req, res, next) => {
+
+    const { id: calendar_id } = req.params
+    const newData = req.body
+
+    Calendar.findById(calendar_id)
+        .then(data => {
+            return Calendar.findByIdAndUpdate(calendar_id, { header: { ...data.header, ...newData } }, { new: true })
+        })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 const deleteCalendar = (req, res, next) => {
 
     const { _id: owner } = req.payload
@@ -32,7 +45,8 @@ const deleteCalendar = (req, res, next) => {
 module.exports = {
     getCalendarByUserId,
     newCalendar,
-    deleteCalendar
+    deleteCalendar,
+    updateCalendarHeader
 }
 
 
