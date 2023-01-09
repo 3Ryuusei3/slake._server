@@ -1,6 +1,6 @@
 const Calendar = require("./../models/Calendar.model")
 
-const getCalendarByUserID = (req, res, next) => {
+const getCalendarByUserId = (req, res, next) => {
 
     Calendar.find({ owner: req.payload._id })
         .then(response => {
@@ -30,7 +30,7 @@ const deleteCalendar = (req, res, next) => {
 }
 
 module.exports = {
-    getCalendarByUserID,
+    getCalendarByUserId,
     newCalendar,
     deleteCalendar
 }
