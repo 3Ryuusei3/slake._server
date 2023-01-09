@@ -3,6 +3,7 @@ const Dashboard = require("./../models/Dashboard.model")
 const Kanban = require("./../models/Kanban.model")
 const Note = require("./../models/Notes.model")
 const SingleNoteModel = require("../models/SingleNote.model")
+const Calendar = require('../models/Calendar.model')
 
 const signup = async (req, res, next) => {
 	try {
@@ -15,10 +16,11 @@ const signup = async (req, res, next) => {
 
 		const createDashboard = await Dashboard.create({ owner: createdUser._id })
 		const createKanban = await Kanban.create({ owner: createdUser._id })
+		const createCalendar = await Calendar.create({ owner: createdUser._id })
 		const createNoteList = await Note.create({ owner: createdUser._id })
 		const createNote = await SingleNoteModel.create({ owner: createdUser._id })
 
-		res.status(201).json({ user, createDashboard, createKanban, createNoteList, createNote })
+		res.status(201).json({ user, createDashboard, createKanban, createCalendar, createNoteList, createNote })
 	} catch (err) {
 		next(err)
 	}
@@ -59,6 +61,7 @@ const deleteUser = async (req, res, next) => {
 
 	try {
 		const deleteUser = await User.findByIdAndRemove(req.payload._id)
+		const deleteCalendar = await Calendar.deleteOne({ owner: req.payload._id })
 		const deleteDashboard = await Dashboard.deleteOne({ owner: req.payload._id })
 		const deleteKanban = await Kanban.deleteOne({ owner: req.payload._id })
 		const deleteNote = await Note.deleteOne({ owner: req.payload._id })
