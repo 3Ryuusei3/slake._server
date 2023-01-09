@@ -20,6 +20,7 @@ module.exports = app => {
 	const kanbanRoutes = require("./kanban.routes")
 	app.use("/api/kanban", kanbanRoutes)
 
-	const weatherRoutes = require("./weather.routes")
-	app.use("/api/weather", weatherRoutes)
+	const calendarRoutes = require("./calendar.routes")
+	app.use("/api/calendar", calendarRoutes)
+
 }
