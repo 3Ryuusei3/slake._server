@@ -1,5 +1,3 @@
-const router = require("express").Router()
-const { isAuthenticated } = require("../middleware/jwt.middleware")
 
 const router = require('express').Router()
 const { isAuthenticated } = require('../middleware/jwt.middleware')
