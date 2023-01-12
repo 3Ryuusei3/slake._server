@@ -33,6 +33,15 @@ const updateCalendarHeader = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const updateEvent = (req, res, next) => {
+
+    const { id: calendar_id } = req.params
+
+    Calendar.findByIdAndUpdate(calendar_id, { events: [...req.body] }, { new: true })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 const deleteCalendar = (req, res, next) => {
 
     const { _id: owner } = req.payload
@@ -46,7 +55,8 @@ module.exports = {
     getCalendarByUserId,
     newCalendar,
     deleteCalendar,
-    updateCalendarHeader
+    updateCalendarHeader,
+    updateEvent,
 }
 
 
