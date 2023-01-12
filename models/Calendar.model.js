@@ -27,11 +27,11 @@ const calendarSchema = new mongoose.Schema(
 					required: false
 				},
 				startDate: {
-					type: String,
+					type: Number,
 					required: false
 				},
 				finishDate: {
-					type: String,
+					type: Number,
 					required: false
 				},
 				tag: {
