@@ -45,6 +45,18 @@ const login = (req, res, next) => {
 		.catch(err => next(err))
 }
 
+const getUserName = (req, res, next) => {
+
+	const { email } = req.body
+
+	User.findOne({ email })
+		.then((foundUser) => {
+			console.log(foundUser)
+			res.json(foundUser)
+		})
+		.catch(err => next(err))
+}
+
 const verify = (req, res) => {
 	res.status(200).json(req.payload)
 }
@@ -80,4 +92,5 @@ module.exports = {
 	verify,
 	refreshToken,
 	deleteUser,
+	getUserName
 }

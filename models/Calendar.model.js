@@ -39,6 +39,11 @@ const calendarSchema = new mongoose.Schema(
 					enum: ["Diary", "Work", "School", "Travel", "Social", "Other"],
 					default: "Diary",
 				},
+				time: {
+					type: String,
+					required: false,
+					default: "00:00"
+				}
 			},
 		],
 		owner: {
