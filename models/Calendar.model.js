@@ -36,8 +36,8 @@ const calendarSchema = new mongoose.Schema(
 				},
 				tag: {
 					type: String,
-					enum: ["Personal", "Work", "School", "Travel", "Social", "Other"],
-					default: "Personal",
+					enum: ["Diary", "Work", "School", "Travel", "Social", "Other"],
+					default: "Diary",
 				},
 			},
 		],
