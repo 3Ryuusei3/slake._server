@@ -20,30 +20,29 @@ const calendarSchema = new mongoose.Schema(
 			{
 				title: {
 					type: String,
-					required: true
+					required: true,
 				},
 				description: {
 					type: String,
-					required: false
+					required: false,
 				},
 				startDate: {
 					type: Number,
-					required: false
+					required: false,
 				},
 				finishDate: {
 					type: Number,
-					required: false
+					required: false,
 				},
 				tag: {
 					type: String,
-					enum: ["Diary", "Work", "School", "Travel", "Social", "Other"],
 					default: "Diary",
 				},
 				time: {
 					type: String,
 					required: false,
-					default: "00:00"
-				}
+					default: "00:00",
+				},
 			},
 		],
 		owner: {
